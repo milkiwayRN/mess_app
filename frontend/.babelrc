@@ -1,0 +1,31 @@
+{
+  "presets": [
+    ["env",{
+      "targets": {
+        "browsers": [
+          "last 2 chrome versions",
+          "last 2 firefox versions",
+          "last 2 edge versions"
+        ]
+      },
+      "include": [ "transform-es2015-classes"]
+    }],
+    "react"
+  ],
+  "plugins": [
+    ["transform-class-properties", { "useBuiltIns": true }],
+    ["transform-decorators-legacy", { "useBuiltIns": true }],
+    ["syntax-trailing-function-commas", { "useBuiltIns": true }],
+    ["transform-object-rest-spread", { "useBuiltIns": true }]
+  ]
+,
+  "env": {
+    "production": {
+      "plugins": [
+        "transform-react-remove-prop-types",
+        "transform-react-constant-elements",
+        "transform-react-inline-elements"
+      ]
+    }
+  }
+}
