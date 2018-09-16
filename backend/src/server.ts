@@ -8,7 +8,8 @@ import * as path from 'path';
 import * as bodyParser from 'body-parser';
 
 import mainRouter from './routers/MainRouter';
-import initPassportStrategy from './authentication/init';
+import initPassportLocalStrategy from './authentication/init';
+import initJWTStrategy from './authentication/jwtAuth';
 import config from '../config/config';
 import authenticationMiddleware from './authentication/middleware';
 import initApi from './routers/ApiRouter';
@@ -16,7 +17,8 @@ const appRedisStore = RedisStore(session);
 
 const app = express();
 
-passport.use(initPassportStrategy());
+passport.use(initPassportLocalStrategy());
+passport.use(initJWTStrategy());
 
 console.log(path.resolve('./static'));
 // serve static assets normally
@@ -27,7 +29,7 @@ app.use(bodyParser.urlencoded({
     extended: false,
   }))
 
-app.use(session({
+/* app.use(session({
     store: new appRedisStore({
       url: config.redisStore.url
     }),
@@ -35,16 +37,34 @@ app.use(session({
     resave: false,
     saveUninitialized: false
   }))
+  */
   
 app.use(passport.initialize())
 
-app.use(passport.session())
+//app.use(passport.session())
 
 app.use('*', mainRouter);
 
 const api = initApi(passport);
 
-app.use('/api', api); // load the router on '/api'
+app.use('/api',function(req, res, next) {
+    passport.authenticate('jwt', {session: false}, function(err, user, info) {
+      if (err) { 
+          return next(err); 
+        }
+      if (!user) { 
+          return next();
+        }
+      req.logIn(user, function(err) {
+        if (err) { 
+            return next(err); 
+        }
+        return next();
+      });
+    })(req, res, next);
+  }, api); // load the router on '/api'
+
+
 
 const server = http.createServer(app);
 

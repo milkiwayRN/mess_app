@@ -6,10 +6,10 @@ import authenticationMiddleware from './middleware';
 import { Strategy } from 'passport';
 
 // Generate Password
-const saltRounds = 10
-const myPlaintextPassword = 'my-password'
-const salt = bcrypt.genSaltSync(saltRounds)
-const passwordHash = bcrypt.hashSync(myPlaintextPassword, salt)
+const saltRounds = 15;
+const myPlaintextPassword = 'my-password';
+const salt = bcrypt.genSaltSync(saltRounds);
+const passwordHash = bcrypt.hashSync(myPlaintextPassword, salt);
 
 interface User {
     username: string;
@@ -38,7 +38,7 @@ passport.deserializeUser(function (username: string, cb: any) {
     findUser(username, cb)
 })
 
-function initPassportStrategy(): Strategy {
+function initPassportLocalStrategy(): Strategy {
     console.log('STR VER 1');
     return (new LocalStrategy({
         usernameField: 'email',
@@ -73,4 +73,4 @@ function initPassportStrategy(): Strategy {
 }
 
 
-export default initPassportStrategy;
+export default initPassportLocalStrategy;
