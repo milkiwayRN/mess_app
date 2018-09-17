@@ -6,14 +6,15 @@ import * as session from 'express-session';
 import * as RedisStore from 'connect-redis';
 import * as path from 'path';
 import * as bodyParser from 'body-parser';
+import * as mongoose from 'mongoose';
 
 import mainRouter from './routers/MainRouter';
 import initPassportLocalStrategy from './authentication/init';
 import initJWTStrategy from './authentication/jwtAuth';
 import config from '../config/config';
-import authenticationMiddleware from './authentication/middleware';
 import initApi from './routers/ApiRouter';
-const appRedisStore = RedisStore(session);
+ 
+mongoose.connect('mongodb://localhost/messengerDB');
 
 const app = express();
 

@@ -2,6 +2,8 @@ const passport = require('passport');
 const bcrypt = require('bcrypt');
 const LocalStrategy = require('passport-local').Strategy;
 
+import { UserModel } from '../models/UserModel';
+import { IUser } from '../interfaces/User';
 import { Strategy } from 'passport';
 
 // Generate Password
@@ -22,20 +24,25 @@ const user: User = {
     id: 1
 };
 
-function findUser(username: string, callback: Function) {
-    if (username === user.username) {
-        return callback(null, user)
-    }
-    return callback(null)
+function findUser(email: string, callback: Function) {
+    UserModel.findOne({ email }, (err, user: IUser) => {
+        if (!err && user) {
+            return callback(null, user);
+        }
+        else {
+            return callback(null);
+        }
+    });
 }
 
 passport.serializeUser(function (user: User, cb: any) {
-    cb(null, user.username)
+    cb(null, user)
 })
-
+/*
 passport.deserializeUser(function (username: string, cb: any) {
     findUser(username, cb)
 })
+*/
 
 function initPassportLocalStrategy(): Strategy {
     console.log('STR VER 1');
@@ -44,7 +51,7 @@ function initPassportLocalStrategy(): Strategy {
         passwordField: 'passwd',
     },
         (username: string, password: any, done: any) => {
-            findUser(username, (err: any, user: User) => {
+            findUser(username, (err: any, user: IUser) => {
                 if (err) {
                     return done(err)
                 }

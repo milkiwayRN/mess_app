@@ -12,7 +12,7 @@ class App extends Component {
     };
 
     render() {
-        const { user, isLoadingUser } = this.props;
+        const { user: { email }, isLoadingUser } = this.props;
         return (
             !isLoadingUser ?
                 <Switch>
@@ -23,7 +23,7 @@ class App extends Component {
                     />
                     <PrivateRoute
                         component={ Placeholder }
-                        isAuthorised={ user.username }
+                        isAuthorised={ email }
                         path="/"
                     />
                 </Switch>
