@@ -1,32 +1,12 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Switch, Route } from 'react-router-dom';
-import LoginForm from '../login/login';
-import Placeholder from '../placeholder';
-import PrivateRoute from '../../components/privateRoute';
+import { connect } from 'react-redux';
 
-class App extends Component {
-    propTypes = {
-        user: PropTypes.object,
-    };
+import App from './Main';
 
-    render() {
-        const { user } = this.props;
-        return (
-            <Switch>
-                <Route
-                    component={ LoginForm }
-                    path="/login"
-                    exact
-                />
-                <PrivateRoute
-                    component={ Placeholder }
-                    isAuthorised={ user }
-                    path="/"
-                />
-            </Switch>
-        );
-    }
-}
+const connectedApp = connect(
+    state => ({
+        user: state.user,
+        isLoadingUser: state.loading.isLoadingUser,
+    }),
+);
 
-export default App;
+export default connectedApp(App);

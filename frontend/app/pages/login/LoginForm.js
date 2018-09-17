@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class LoginForm extends Component {
+    static propTypes = {
+        requestLoginUser: PropTypes.func.isRequired,
+        isLoginFail: PropTypes.bool,
+    };
+
     state = {
         email: null,
         password: null,
@@ -12,6 +18,7 @@ class LoginForm extends Component {
         const { email, password } = this.state;
         if (email && password) {
             console.log('Log In OK');
+            this.props.requestLoginUser(email, password);
         }
         else {
             console.log('SOMETHING WRONG');
@@ -26,6 +33,11 @@ class LoginForm extends Component {
 
     bindChangeCB = fieldName => this.onChangeHandler.bind(this, fieldName);
 
+    renderNotification = () => {
+        const { isLoginFail } = this.props;
+        return isLoginFail ? <div> Incorrect email or passowrd </div> : null;
+    };
+
     render() {
         return (
             <form onSubmit={ this.onSubmit }>
@@ -38,6 +50,7 @@ class LoginForm extends Component {
                     <input type="password" onChange={ this.bindChangeCB('password') } />
                 </label>
                 <input type="submit" value="Log in" />
+                { this.renderNotification() }
             </form>
         );
     }
