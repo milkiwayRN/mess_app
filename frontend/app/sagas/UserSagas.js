@@ -2,7 +2,7 @@ import { takeEvery, put, call } from 'redux-saga/effects';
 import { push } from 'react-router-redux';
 
 import userService from '../services/UserService';
-import { receiveUser, receiveLoginUserInfo, loginUserFail } from '../actions/UserActions';
+import { receiveUser, receiveLoginUserInfo, loginUserFail, unauthorisedUser } from '../actions/UserActions';
 import { REQUEST_USER, REQUEST_LOGIN_USER } from '../constants/UserActionTypes';
 
 function* fetchUserInfo() {
@@ -11,6 +11,7 @@ function* fetchUserInfo() {
         yield put(receiveUser(data));
     }
     catch (error) {
+        yield put(unauthorisedUser());
         console.log(error);
     }
 }
@@ -28,7 +29,7 @@ function* fetchUserLogin(action) {
     }
     catch (error) {
         console.log(error.message);
-        put(loginUserFail());
+        yield put(loginUserFail());
     }
 }
 

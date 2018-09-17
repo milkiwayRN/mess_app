@@ -22,19 +22,16 @@ export function requestLoginUser(email, password) {
 export function receiveUser(newUser) {
     const { user } = userStorage.data;
 
-    if (isEqual(user, newUser)) {
-        return {};
-    }
-    else {
+    if (!isEqual(user, newUser)) {
         userStorage.data = {
             ...userStorage.data,
             user: newUser,
         };
-        return {
-            type: RECEIVE_USER,
-            payload: newUser,
-        };
     }
+    return {
+        type: RECEIVE_USER,
+        payload: newUser,
+    };
 }
 
 export function receiveLoginUserInfo(payload) {

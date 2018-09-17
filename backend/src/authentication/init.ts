@@ -2,7 +2,6 @@ const passport = require('passport');
 const bcrypt = require('bcrypt');
 const LocalStrategy = require('passport-local').Strategy;
 
-import authenticationMiddleware from './middleware';
 import { Strategy } from 'passport';
 
 // Generate Password
@@ -18,7 +17,7 @@ interface User {
 };
 
 const user: User = {
-    username: 'test-user',
+    username: 'test-user@example.com',
     passwordHash,
     id: 1
 };
@@ -45,7 +44,6 @@ function initPassportLocalStrategy(): Strategy {
         passwordField: 'passwd',
     },
         (username: string, password: any, done: any) => {
-            console.log(username, password);
             findUser(username, (err: any, user: User) => {
                 if (err) {
                     return done(err)
@@ -63,6 +61,7 @@ function initPassportLocalStrategy(): Strategy {
                         return done(err)
                     }
                     if (!isValid) {
+                        console.log('Invalid password');
                         return done(null, false)
                     }
                     return done(null, user)

@@ -12,9 +12,8 @@ function initApiRouter(passport: PassportStatic) {
   });
 
   api.get('/me', (req, res) => {
-    console.log('USER IN GET', req.isAuthenticated())
     if (req.isAuthenticated()) {
-      res.json({ username: req.user.username });
+      res.json(req.user);
     }
     else {
       res.send(401);
@@ -23,16 +22,18 @@ function initApiRouter(passport: PassportStatic) {
   });
 
   api.post('/me', function (req, res, next) {
-    passport.authenticate('local', {session: false}, (err, user, info) => {
+    passport.authenticate('local', { session: false }, (err, user, info) => {
         if (err || !user) {
             return res.status(400).json({
                 message: 'Something is not right',
-                user   : user
+                user: user,
+                err,
+                info,
             });
         }
        req.login(user, {session: false}, (err) => {
            if (err) {
-               res.send(err);
+               res.status(400).json({ err, user });
            }
            // generate a signed son web token with the contents of user object and return it in the response
            const token = jwt.sign(user, 'your_jwt_secret');

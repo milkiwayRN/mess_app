@@ -23,7 +23,7 @@ class App extends Component {
                     />
                     <PrivateRoute
                         component={ Placeholder }
-                        isAuthorised={ user }
+                        isAuthorised={ user.username }
                         path="/"
                     />
                 </Switch>

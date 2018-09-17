@@ -2,10 +2,12 @@ import userStorage from './SessionUserStorage';
 import FETCH_TYPES from '../constants/FetchTypes';
 
 export function setUpHeaders() {
-    const headers = {};
+    const headers = {
+        'Content-Type': 'application/json',
+    };
     const userInfo = userStorage.data;
     if (userInfo) {
-        headers.Authorization = `Beaver ${userInfo.token}`;
+        headers.Authorization = `Bearer ${userInfo.token}`;
     }
     return headers;
 }
@@ -13,6 +15,7 @@ export function setUpHeaders() {
 export const RequestParamsFactory = {
     GET: () => ({
         method: FETCH_TYPES.get,
+        credentials: 'include',
         headers: setUpHeaders(FETCH_TYPES.get),
     }),
 
@@ -20,6 +23,7 @@ export const RequestParamsFactory = {
         method: FETCH_TYPES.post,
         body: JSON.stringify(payload),
         dataType: 'json',
+        credentials: 'include',
         headers: setUpHeaders(FETCH_TYPES.post),
     }),
 
@@ -27,11 +31,13 @@ export const RequestParamsFactory = {
         method: FETCH_TYPES.put,
         body: JSON.stringify(payload),
         dataType: 'json',
+        credentials: 'include',
         headers: setUpHeaders(FETCH_TYPES.put),
     }),
 
     DELETE: () => ({
         method: FETCH_TYPES.delete,
+        credentials: 'include',
         headers: setUpHeaders(FETCH_TYPES.delete),
     }),
 
@@ -40,7 +46,7 @@ export const RequestParamsFactory = {
 export function fetchWrapper(url, params) {
     return fetch(url, params)
         .then(res => {
-            if (res.status === 400) {
+            if (res.status === 200) {
                 return res.json();
             }
             else {
