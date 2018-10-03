@@ -13,6 +13,7 @@ import initPassportLocalStrategy from './authentication/init';
 import initJWTStrategy from './authentication/jwtAuth';
 import config from '../config/config';
 import initApi from './routers/ApiRouter';
+import getDialogs from './webSockets/getDialogs';
  
 mongoose.connect('mongodb://localhost/messengerDB');
 
@@ -60,7 +61,9 @@ app.use('/api',function(req, res, next) {
         if (err) { 
             return next(err); 
         }
-        return next();
+        else {
+          return next();
+        }
       });
     })(req, res, next);
   }, api); // load the router on '/api'
@@ -71,14 +74,20 @@ const server = http.createServer(app);
 
 const wss = new WebSocket.Server({ server });
 
-wss.on('connection', (ws: WebSocket) => {
-
+wss.on('connection', (ws: WebSocket, socket: WebSocket, request: http.IncomingMessage) => {
     //connection is up, let's add a simple simple event
     ws.on('message', (message: string) => {
 
         //log the received message and send it back to the client
         console.log('received: %s', message);
         ws.send(`Hello, you sent -> ${message}`);
+    });
+
+    ws.on('GET_DIALOGS', (requestBody: string) => {
+        const data = JSON.parse(requestBody);
+        getDialogs(data.userId, (userDialogs: any) => {
+          ws.send(JSON.stringify(userDialogs));
+        })
     });
 
     //send immediatly a feedback to the incoming connection    

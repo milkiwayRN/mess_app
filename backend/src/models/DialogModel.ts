@@ -1,4 +1,4 @@
-import { Document, Schema, Model, model} from "mongoose";
+import { Document, Schema, Model, model } from "mongoose";
 
 export interface IDialogModel extends  Document{};
 
