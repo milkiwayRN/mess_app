@@ -1,0 +1,17 @@
+email: "nikolaii@gmail.com"
+passwordHash: "$2b$15$Hr.Oy9pTVuvsjlfhueY/t.igjyPp5AZkMFjoHz2X10TpfTowocmhy"
+__v: 0
+_id: "5bb62981304dad3200cd53b7"
+
+
+
+email: "savchenko_vladislav@epam.com"
+passwordHash: "$2b$15$MVM1inZbBlDmmP527hBSDOukhibykdJdkpnFXG62n5N2xB6gZGFte"
+__v: 0
+_id: "5bb6293e304dad3200cd53b6"
+
+dialog 
+admin: "5bb6293e304dad3200cd53b6"
+messages: []
+participants: ["5bb6293e304dad3200cd53b6", "5bb62981304dad3200cd53b7"]
+_id: "5bb6343342350e0834d5b122"

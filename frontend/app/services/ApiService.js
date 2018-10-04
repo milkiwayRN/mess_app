@@ -7,4 +7,6 @@ const apiService = {
     delete: url => fetchWrapper(url, RequestParamsFactory.DELETE()),
 };
 
+window.apiService = apiService;
+
 export default apiService;

@@ -9,6 +9,9 @@ import * as jwt from 'jsonwebtoken';
 import { UserModel } from '../models/UserModel';
 import { IUser } from '../interfaces/User';
 
+import dialogsRouter from './dialogsRouter';
+import messageRouter from './messageRouter';
+
 function initApiRouter(passport: PassportStatic) {
   const api = express.Router();
 
@@ -79,6 +82,10 @@ function initApiRouter(passport: PassportStatic) {
       }
     })
   });
+
+  api.use('/dialogs', dialogsRouter);
+
+  api.use('/message', messageRouter);
 
   return api;
 }
