@@ -9,7 +9,7 @@ import * as jwt from 'jsonwebtoken';
 import { UserModel } from '../models/UserModel';
 import { IUser } from '../interfaces/User';
 
-import dialogsRouter from './dialogsRouter';
+import initDialogsRouter from './dialogsRouter';
 import initMessageRouter from './messageRouter';
 
 function initApiRouter(passport: PassportStatic, userIds: any, webSocketID: any) {
@@ -83,7 +83,7 @@ function initApiRouter(passport: PassportStatic, userIds: any, webSocketID: any)
     })
   });
 
-  api.use('/dialogs', dialogsRouter);
+  api.use('/dialogs', initDialogsRouter(userIds, webSocketID));
 
   api.use('/message', initMessageRouter(userIds, webSocketID));
 

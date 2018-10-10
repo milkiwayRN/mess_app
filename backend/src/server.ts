@@ -2,8 +2,6 @@ import * as express from 'express';
 import * as http from 'http';
 import * as WebSocket from 'ws';
 import * as passport from 'passport';
-import * as session from 'express-session';
-import * as RedisStore from 'connect-redis';
 import * as path from 'path';
 import * as bodyParser from 'body-parser';
 import * as mongoose from 'mongoose';
@@ -31,20 +29,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: false,
   }))
-
-/* app.use(session({
-    store: new appRedisStore({
-      url: config.redisStore.url
-    }),
-    secret: config.redisStore.secret,
-    resave: false,
-    saveUninitialized: false
-  }))
-  */
   
 app.use(passport.initialize())
-
-//app.use(passport.session())
 
 app.use('*', mainRouter);
 
@@ -117,5 +103,12 @@ wss.on('connection', (ws: IdWebSocket, socket: WebSocket, request: http.Incoming
 
 //start our server
 server.listen(process.env.PORT || 8999, () => {
-    console.log(`Server started `);
+  const address = server.address()
+  let port;
+  if (typeof(address) === 'string') {
+    port = address;
+  } else {
+    port = address.port;
+  }
+  console.log(`Server started on ${port}`);
 });

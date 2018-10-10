@@ -9,9 +9,6 @@ interface Config {
 }
 const args = require("args-parser")(process.argv);
 
-console.log(args.REDIS_STORE_URI);
-console.log(args.REDIS_STORE_SECRET);
-
 // this was written just for development purpose.
 // set up this in ENV variables for real project usage
 const config: Config = {
