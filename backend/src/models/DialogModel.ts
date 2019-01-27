@@ -4,6 +4,7 @@ import { IMessage } from '../interfaces/Message';
 export interface IDialogModel extends  Document{
   participants: Array<Types.ObjectId>;
   messages: Array<IMessage>;
+  isPrivate: Boolean;
   admin: Types.ObjectId | null;
 };
 

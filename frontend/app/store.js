@@ -8,6 +8,7 @@ import reducer from './reducers';
 import history from './history';
 import userStorage from './utils/SessionUserStorage';
 import { watchRequestUserInfo, watchRequestUserLogin } from './sagas/UserSagas';
+import { watchRequestUserDialogsIds } from './sagas/DialogsSagas';
 import { requestUser } from './actions/UserActions';
 
 const initialState = {
@@ -25,6 +26,7 @@ const store = createStore(
 
 sagaMiddleware.run(watchRequestUserInfo);
 sagaMiddleware.run(watchRequestUserLogin);
+sagaMiddleware.run(watchRequestUserDialogsIds);
 
 store.dispatch(requestUser());
 

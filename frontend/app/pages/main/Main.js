@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
+
 import LoginForm from '../login';
 import Placeholder from '../placeholder';
 import PrivateRoute from '../../components/privateRoute';
+import UserMainPage from '../UserMainPage';
 
 class App extends Component {
-    propTypes = {
+    static propTypes = {
         user: PropTypes.object,
         isLoadingUser: PropTypes.bool,
     };
@@ -22,7 +24,7 @@ class App extends Component {
                         exact
                     />
                     <PrivateRoute
-                        component={ Placeholder }
+                        component={ UserMainPage }
                         isAuthorised={ email }
                         path="/"
                     />
