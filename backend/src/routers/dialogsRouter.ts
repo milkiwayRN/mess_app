@@ -25,7 +25,7 @@ function initDialogsRouter(userIds: any, webSocketID: any) {
         DialogModel.findById(id, function(err, dialog) {
             if (err) {
                 res.send(500);
-            } 
+            }
             else {
                 if (dialog === null) {
                     res.send(404);
@@ -44,7 +44,7 @@ function initDialogsRouter(userIds: any, webSocketID: any) {
                     else {
                         res.send(403);
                     }
-                    
+
                 }
             }
         })
@@ -80,7 +80,7 @@ function initDialogsRouter(userIds: any, webSocketID: any) {
                         }
                         else {
                             if (UserDialogs !== null) {
-                                UserDialogs.dialogsIds.push(responseDialog._id)
+                                UserDialogs.dialogsIds.push(responseDialog._id);
                                 const dialogsIds = UserDialogs.dialogsIds;
                                 UserDialogs.set({ dialogsIds });
                                 UserDialogs.save((err) => {
