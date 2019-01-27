@@ -40,17 +40,16 @@ messageRouter.put('', function (req, res, next) {
             if (isSenderParticipant) {
                 dialog.messages.push(newMessageData);
                 const messages = dialog.messages;
-                res.status(200).json(messages);
-                // dialog.set({ messages });
-                // dialog.save((err, updatedDialog) => {
-                //     if (err) {
-                //         res.send(500);
-                //     }
-                //     else {
-                //         res.status(201).json(updatedDialog);
-                //     }
+                dialog.set({ messages });
+                dialog.save((err, updatedDialog) => {
+                    if (err) {
+                        res.send(500);
+                    }
+                    else {
+                        res.status(201).json(updatedDialog);
+                    }
 
-                // });
+                });
             }
             else {
                 res.send(403);
