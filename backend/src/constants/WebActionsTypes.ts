@@ -1,0 +1,3 @@
+export const ESTABLISH_CONNECTION: string = 'ESTABLISH_CONNECTION';
+export const CREATED_MESSAGE: string = 'CREATED_MESSAGE';
+export const CREATED_DIALOG: string = 'CREATED_DIALOG';

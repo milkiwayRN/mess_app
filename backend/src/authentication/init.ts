@@ -45,7 +45,6 @@ passport.deserializeUser(function (username: string, cb: any) {
 */
 
 function initPassportLocalStrategy(): Strategy {
-    console.log('STR VER 1');
     return (new LocalStrategy({
         usernameField: 'email',
         passwordField: 'passwd',
@@ -58,7 +57,6 @@ function initPassportLocalStrategy(): Strategy {
 
                 // User not found
                 if (!user) {
-                    console.log('User not found')
                     return done(null, false)
                 }
 
@@ -68,7 +66,6 @@ function initPassportLocalStrategy(): Strategy {
                         return done(err)
                     }
                     if (!isValid) {
-                        console.log('Invalid password');
                         return done(null, false)
                     }
                     return done(null, user)
