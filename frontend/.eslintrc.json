@@ -49,7 +49,7 @@
         "class-property/class-property-semicolon": [2, "always"],
 
         "promise/always-return": 1,
-        "promise/catch-or-return": 1,
+        "promise/catch-or-return": 0,
         "promise/avoid-new": 0,
 
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
